@@ -1,13 +1,10 @@
 import * as React from "react"
-import Item from "../../database/models/item"
 import { useItems } from "../../database/hooks/useItems"
+import { useRouter } from "../../routing"
 
-interface Props {
-  setFocusedId: (id: number) => void
-}
-
-const ItemList: React.FC<Props> = ({ setFocusedId }) => {
+const ItemList: React.FC<{}> = () => {
   const itemTable = useItems()
+  const router = useRouter()
 
   if (itemTable.data.isPending) {
     return <div>
@@ -25,13 +22,18 @@ const ItemList: React.FC<Props> = ({ setFocusedId }) => {
 
   const items = itemTable.data.value
 
+  const clickItem = (itemId: number) => {
+    router.goTo("item", itemId)
+  }
+
   return <div>
     <h3>Item List</h3>
       <ul>
       {items.map(item =>
-        <li key={item.id}><a onClick={() => setFocusedId(item.id)}>{item.name}</a>: {item.counter}</li>
+        <li key={item.id}><a onClick={() => clickItem(item.id)}>{item.name}</a>: {item.counter}</li>
       )}
     </ul>
+    <a onClick={() => router.goTo("item_new")}>Add new</a>
   </div>
 }
 

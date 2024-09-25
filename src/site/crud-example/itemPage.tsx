@@ -3,14 +3,15 @@ import Item from "../../database/models/item"
 import useItem from "../../database/hooks/useItem"
 import EditableTextField from "./editableTextField"
 import Counter from "./counter"
+import { useRouter } from "../../routing"
 
 interface Props {
   id: number,
-  unsetFocusedId: () => void
 }
 
-const ItemPage: React.FC<Props> = ({ id, unsetFocusedId }) => {
+const ItemPage: React.FC<Props> = ({ id }) => {
   const itemRow = useItem(id)
+  const router = useRouter()
 
   if (itemRow.data.isPending) {
     return <div>
@@ -30,6 +31,7 @@ const ItemPage: React.FC<Props> = ({ id, unsetFocusedId }) => {
 
   return <div>
     <h3>Item Page</h3>
+    <a onClick={() => router.goTo("item_list")}>Back</a>
     <EditableTextField
       model={item}
       fieldName="name"
@@ -45,7 +47,7 @@ const ItemPage: React.FC<Props> = ({ id, unsetFocusedId }) => {
     <button
       onClick={() => {
         itemRow.delete()
-        unsetFocusedId()
+        router.goTo("item_list")
       }}>Delete</button>
   </div>
 }

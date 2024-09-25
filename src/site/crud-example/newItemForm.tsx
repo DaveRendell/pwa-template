@@ -2,17 +2,20 @@ import * as React from "react"
 import Item from "../../database/models/item"
 import useTable from "../../core/database/useTable"
 import DatabaseContext from "../../database/context"
+import { useRouter } from "../../routing"
 
 const NewItemForm: React.FC<{}> = () => {
   const [name, setName] = React.useState("")
   const [counter, setCounter] = React.useState(0)
   const table = useTable("items", DatabaseContext)
+  const router = useRouter()
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const newItem: Omit<Item, "id"> = { name, counter }
 
     table.add(newItem)
+    router.goTo("item_list")
 
     setName("")
     setCounter(0)
@@ -46,6 +49,7 @@ const NewItemForm: React.FC<{}> = () => {
         id="submit-item"
         value="Add"
       />
+      <button onClick={() => router.goTo("item_list")}>Cancel</button>
     </form>
   </div>
 }

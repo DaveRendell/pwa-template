@@ -1,6 +1,7 @@
 import * as React from "react"
 import { useItems } from "../../database/hooks/useItems"
 import { useRouter } from "../../routing"
+import ItemForm from "./itemForm"
 
 const ItemList: React.FC<{}> = () => {
   const itemTable = useItems()

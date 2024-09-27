@@ -32,6 +32,8 @@ const ItemPage: React.FC<Props> = ({ id }) => {
   return <div>
     <h3>Item Page</h3>
     <a onClick={() => router.goTo("item_list")}>Back</a>
+    <br/>
+    <a onClick={() => router.goTo("item_edit", item.id)}>Edit</a>
     <EditableTextField
       model={item}
       fieldName="name"

@@ -3,7 +3,7 @@ import { z } from "zod"
 const Item = z.object({
   id: z.number(),
 
-  name: z.string(),
+  name: z.string().min(1),
   counter: z.number(),
 })
 

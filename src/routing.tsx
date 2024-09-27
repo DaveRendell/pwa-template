@@ -4,13 +4,15 @@ import { Router } from "./core/routing/router"
 import ItemList from "./site/crud-example/itemList"
 import ItemPage from "./site/crud-example/itemPage"
 import NewItemForm from "./site/crud-example/newItemForm"
+import EditItemForm from "./site/crud-example/editItemForm"
 
 // Simple implementation of routing to different pages in the app - if 
 // more complex logic is needed sub in React Router or similar.
 export const APP_ROUTES = {
   "item_list": () => <ItemList />,
   "item": (itemId: number) => <ItemPage id={itemId}/>,
-  "item_new": () => <NewItemForm />
+  "item_new": () => <NewItemForm />,
+  "item_edit": (itemId: number) => <EditItemForm id={itemId} />,
 } as const satisfies RouteTable
 
 export const RouterContext = React.createContext<Router<typeof APP_ROUTES> | undefined>(undefined)

@@ -5,17 +5,17 @@ import { DatabaseModel, TableDefinition } from "./types";
 
 export class Table<Model extends DatabaseModel> {
   private readonly definition: TableDefinition<Model>
-  private readonly indexedDbPromise: Promise<IDBDatabase>
+  private readonly indexedDb: IDBDatabase
 
   readonly channelName: string
   private readonly broadcastChannel: StrictBroadcastChannel<TableUpdateMessage<Model>>
 
   constructor(
     definition: TableDefinition<Model>,
-    indexedDbPromise: Promise<IDBDatabase>
+    indexedDb: IDBDatabase,
   ) {
     this.definition = definition
-    this.indexedDbPromise = indexedDbPromise
+    this.indexedDb = indexedDb
     this.channelName = this.definition.name + "_update"
     this.broadcastChannel = new BroadcastChannel(this.channelName)
   }
@@ -59,7 +59,6 @@ export class Table<Model extends DatabaseModel> {
   }
 
   async objectStore(mode: IDBTransactionMode): Promise<IDBObjectStore> {
-    const database = await this.indexedDbPromise
-    return database.transaction(this.definition.name, mode).objectStore(this.definition.name)
+    return this.indexedDb.transaction(this.definition.name, mode).objectStore(this.definition.name)
   }
 }

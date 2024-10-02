@@ -1,8 +1,6 @@
 import * as React from "react"
-import createDatabase from "./createDatabase"
+import createDatabase, { AppDatabase } from "./createDatabase"
 
-type DatabaseType = ReturnType<typeof createDatabase>
-
-const DatabaseContext = React.createContext<DatabaseType | undefined>(undefined)
+const DatabaseContext = React.createContext<AppDatabase | undefined>(undefined)
 
 export default DatabaseContext
